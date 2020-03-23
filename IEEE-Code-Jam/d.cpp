@@ -8,7 +8,6 @@
 
 using namespace std;
 
-
 #define debug(x) cout<<x<<endl;
 
 const int MOD = 1e8+7;

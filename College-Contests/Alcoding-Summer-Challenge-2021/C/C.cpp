@@ -15,20 +15,17 @@ int32_t main() {
         for (int i = 0; i < n; i++) {
             scanf("%lld", &a[i]);
         }
-        // one from the left, one from the right
         ans = 0;
-        // find longest ascending subsequence
-        vector <int> dp (n, 1);
-        int x = 0;
-        for (int i = 0; i < n; i++) {
-            for (int j = i - 1; j >= 0; j--) {
-                if (a[i] > a[j]) {
-                    dp[i] = max (dp[j] + 1, dp[i]);
-                    x = max (x, dp[i]);
-                }
+        vector <int> l = {a[0]};
+        for (int i = 1; i < n; i++) {
+            if (a[i] >= l[(int)l.size() - 1]) {
+                l.push_back (a[i]);
+            } else {
+                vector<int>::iterator idx = lower_bound(l.begin(), l.end(), a[i]);
+                l[idx-l.begin()] = a[i];
             }
         }
-        ans = n - x;
+        ans = n - (int) l.size();
         printf("%lld\n", ans);
     }
 }

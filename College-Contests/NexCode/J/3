@@ -1,0 +1,59 @@
+#include "bits/stdc++.h"
+
+#ifdef local
+#include "custom/debugger.h"
+#else
+#define debug(...) 42;
+#endif
+
+using namespace std;
+#define int long long
+const int MAXN = 5;
+
+
+int get(int v, int tl, int tr, int pos) {
+    if (tl == tr)
+        return t[v];
+    int tm = (tl + tr) / 2;
+    if (pos <= tm)
+        return t[v] + get(v*2, tl, tm, pos);
+    else
+        return t[v] + get(v*2+1, tm+1, tr, pos);
+}
+
+void solve() {
+    int q;
+    scanf("%lld%lld", &n, &q);
+    vector <int> a(n);
+    for (int i = 0; i < n; i++) {
+        scanf("%lld", &a[i]);
+    }
+    build(a, 1, 0, n - 1);
+    debug (t);
+    for (int i = 0; i < q; i++) {
+        string query;
+        cin >> query;
+        if (query == "neg") {
+            int l, r;
+            scanf("%lld%lld", &l, &r);
+            update (1, 0, n - 1, l - 1, r - 1);
+        } else if (query == "set") {
+            int x, y;
+            scanf("%lld%lld", &x, &y);
+            update_set (1, 0, n - 1, x - 1, y);
+        } else {
+            int l, r;
+            scanf("%lld%lld", &l, &r);
+            int ans = get (1, l - 1, r - 1, 0);
+            printf("%lld\n", ans);
+        }
+    }
+}
+
+int32_t main() {
+    // int t = 1;
+    // cin >> t;
+    for (int tt = 1; tt <= 1; tt++) {
+        solve();
+    }
+}
